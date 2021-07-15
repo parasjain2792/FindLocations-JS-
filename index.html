@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<style>
+#maps{
+height: 500px;
+width : 100%;
+
+}
+</style> 
+<body class="bg-dark text-white text-center">
+      <h1><u>My Google Maps</u></h1>
+      
+    <form>
+      <div class="form-group"></div>
+        <input id="input1" type="number" >
+        <input id="input2" type="number">
+        <button id="onit" type="submit" class="btn btn-primary mb-2">Search</button>
+      </div>
+    </form>
+     <br>
+      <div id="maps"></div>
+    <script>
+
+     function initMap(){
+     var options={
+    zoom:8,
+    center:{lat:28.8638424,lng:78.80577833091104}
+    
+     };
+      //adds map
+      var maping=new google.maps.Map(document.getElementById('maps'),options);
+     var marker=new google.maps.Marker({
+    position:{lat:40.7128,lng:74.0060},
+    map:maping
+     });
+    var infowindow=new google.maps.InfoWindow({
+    content:`<h1>Something</h1>`
+    
+    })
+     marker.addListener('click',function(){
+     infowindow.open(maping,marker);
+     });
+    // adding a function of marker 
+     function addMarker(props){
+    var marker=new google.maps.Marker({
+    position:props.coords,
+    map:maping
+    }) ;
+
+          
+     }
+   
+  document.getElementById('onit').addEventListener('click',onclick);
+  //console.log(document.getElementById('onit'));
+  function onclick(e){
+  e.preventDefault();
+  const A=parseFloat(document.getElementById('input1').value);
+  const B=parseFloat(document.getElementById('input2').value);
+  console.log(A);
+  console.log(B);
+  var marker1=new google.maps.Marker({
+  position:{lat:A,lng:B},
+  map:maping
+
+  })
+  };
+ 
+  
+  google.maps.event.addListener(maping,'click',
+  function (event){
+
+addMarker({coords:event.latLng});
+  });
+
+
+}
+    </script>
+    
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPy6H0Gb9fSQQpDXABQ5hjiCuqo89PgeI&callback=initMap&libraries=&v=weekly"
+      async
+    ></script>
+</body>
+</html>
